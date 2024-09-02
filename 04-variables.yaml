@@ -1,10 +1,20 @@
 - name: variables
   hosts: web
-  vars:
+  vars: #play level variables, applicable to all tasks
     COURSE: "Devops with AWS"
     DURATION: "120HRS"
     TRAINER: "Siva"
   tasks:
-  - name: print variables
+  - name: print the information
     ansible.builtin.debug:
-      msg: "Hi, I am learning {{COURSE}}, duration is: {{DURATION}}, Trainer: {{TRAINER}}"
+      msg: "Hi, I am learning {{COURSE}}, duration is: {{DURATION}}, trainer is: {{TRAINER}}"
+
+  - name: print the information again
+    vars: #task level variables, override play level variables
+      COURSE: "Ansible"
+    ansible.builtin.debug:
+      msg: "Hi, I am learning {{COURSE}}, duration is: {{DURATION}}, trainer is: {{TRAINER}}"
+
+  - name: print the information again and again
+    ansible.builtin.debug:
+      msg: "Hi, I am learning {{COURSE}}, duration is: {{DURATION}}, trainer is: {{TRAINER}}"
