@@ -1,5 +1,6 @@
 - name: data types
   hosts: local
+  connection: local
   vars:
     course: "Devops with AWS" #string
     duration: "130" #number
