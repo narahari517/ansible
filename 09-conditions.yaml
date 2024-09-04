@@ -1,4 +1,4 @@
-- name: print this if the give number is less than 10 or not
+- name: print if the number is less than 10 or not
   hosts: local
   connection: local
   vars_prompt:
@@ -9,9 +9,9 @@
   - name: print if the number is less than 10
     ansible.builtin.debug:
       msg: "Given number {{my_number}} is less than 10"
-    when: my_number | int < 10 #conditional expression
+    when: my_number < 10 #conditional exression
   
-  - name: print if the number is greater than or equal to 10
+  - name: print if the given number is greater than or equal to 10
     ansible.builtin.debug:
       msg: "Given number {{my_number}} is greater than or equal to 10"
-    when: my_number | int >=10
+    when: my_number >= 10
