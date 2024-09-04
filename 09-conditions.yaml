@@ -1,0 +1,18 @@
+- name: print this if the give number is less than 10 or not
+  hosts: local
+  connection: local
+  vars_prompt:
+  - name: my_number
+    prompt: Please provide the number
+    private: false #not confidential
+  tasks:
+  - name: print if the number is less than 10
+    ansible.builtin.debut:
+      msg: "Given number {{my_number}} is less than 10"
+    when: my_number | int < 10 #conditional expression
+  
+  - name: print if the number is greater than or equal to 10
+    ansible.builtin.debug:
+      msg: "Given number {{my_number}} is greater than or equal to 10"
+    when: my_number | int >=10
+    
