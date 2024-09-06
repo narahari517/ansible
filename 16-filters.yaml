@@ -30,7 +30,7 @@
     ansible.builtin.debug:
       msg: "Min: {{ numbers | min }} and Max: {{ numbers | max }}"
 
-  - name: convert dictionary to list
+  - name: convert dictionary/map to list
     vars:
       course:
         name: "Devops with AWS"
@@ -38,3 +38,12 @@
         trainer: "Siva"
     ansible.builtin.debug:
       msg: "{{ course | dict2items }}"
+
+  - name: convert list to dictionary/map
+    vars:
+      course:
+      - {"key": "name", "value": "Devops with AWS"}
+      - {"key": "duration", "value": "120"}
+      - {"key": "trainer", "value": "Siva"}
+    ansible.builtin.debug:
+      msg: "{{ course | items2dict }}"
