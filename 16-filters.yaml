@@ -4,4 +4,4 @@
   tasks:
   - name: variable-filters
     ansible.builtin.debug:
-      msg "Hi {{ course | default('Devops') }}"
+      msg: "Hi {{ course | default('Devops') }}"
