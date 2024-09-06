@@ -1,0 +1,7 @@
+- name: filters demo
+  hosts: local
+  connection: local
+  tasks:
+  - name: variable-filters
+    ansible.builtin.debug:
+      msg "Hi {{ course }}"
