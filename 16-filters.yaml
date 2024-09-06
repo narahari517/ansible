@@ -5,3 +5,15 @@
   - name: variable-filters
     ansible.builtin.debug:
       msg: "Hi {{ course | default('Devops') }}"
+
+  - name: upper case
+    vars:
+      greetings: "Hello Hari"
+    ansible.builtin.debug:
+      msg: {{ greetings | upper}}
+
+  - name: lower case
+    vars:
+      greetings: "Hi Hari"
+    ansible.builtin.debug:
+      msg: {{ greetings | lower}}
