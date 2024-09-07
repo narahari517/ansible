@@ -1,4 +1,4 @@
-- name: create ec2 and r53
+- name: create ec2_instances and route53
   hosts: local
   connection: local
   vars:
@@ -9,9 +9,8 @@
     - mysql
     - backend
     - frontend
-    zone: "nhari.online"
   tasks:
-  - name: create ec2 instance
+  - name: create ec2-instance
     amazon.aws.ec2_instance:
       name: "{{ item }}"
       vpc_subnet_id: "{{ subnet_id }}"
@@ -21,33 +20,3 @@
     loop: "{{ instances }}"
     register: ec2_instances
 
-  - name: print the output
-    ansible.builtin.debug:
-      msg: "{{ ec2_instances }}"
-
-#private IP address
-  - name: create route53 private records
-    amazon.aws.route53:
-      state: present
-      zone: "{{ zone }}"
-      record: "{{ item.item }}.{{ zone }}" #mysql.nhari.online
-      type: A
-      ttl: 1
-      value: "{{ item.instances[0].private_ip_address }}"
-      wait: true
-      overwrite: true
-    loop: "{{ ec2_instances.results }}"
-
-#public IP address
-  - name: create route53 public records
-    amazon.aws.route53:
-      state: present
-      zone: "{{ zone }}"
-      record: "{{ zone }}" #nhari.online
-      type: A
-      ttl: 1
-      value: "{{ item.instances[0].public_ip_address }}"
-      wait: true
-      overwrite: true
-    loop: "{{ ec2_instances.results }}"
-    when: item.item == "frontend"
