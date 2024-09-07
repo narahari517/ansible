@@ -9,6 +9,7 @@
     - mysql
     - backend
     - frontend
+    zone: "nhari.online"
   tasks:
   - name: create ec2-instance
     amazon.aws.ec2_instance:
@@ -19,4 +20,21 @@
       image_id: "{{ ami_id }}"
     loop: "{{ instances }}"
     register: ec2_instances
+
+  - name: print the output
+    ansible.builtin.debug:
+      msg: "{{ ec2_instances }}"
+  
+  - name: create route53 private IP
+    amazon.aws.route53:
+      state: present
+      zone: "{{ zone }}"
+      record: "{{ item.item }}.{{ zone }}" #mysql.nhari.online
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].private_ip_address }}" #private IP address to create DNS
+      wait: true
+      overwrite: true
+    loop: "{{ ec2_instances.results }}"
+
 
