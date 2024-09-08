@@ -12,12 +12,12 @@
     zone: "nhari.online"
   tasks:
   - name: install boto3 and botocore
-    ansible.builtin.package:
+    ansible.builtin.pip:
       name:
       - botocore
       - boto3
       executable: pip3.9
-      
+
   - name: create ec2-instance
     amazon.aws.ec2_instance:
       name: "{{ item }}"
